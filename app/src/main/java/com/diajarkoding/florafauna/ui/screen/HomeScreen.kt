@@ -42,7 +42,7 @@ fun HomeScreen(
 
         item {
             SpeciesCarousel(
-                speciesList = speciesList.take(5),
+                speciesList = speciesList.take(20),
                 onItemClick = onItemClick,
                 modifier = Modifier
                     .fillMaxWidth()

@@ -1,5 +1,6 @@
 package com.diajarkoding.florafauna.ui
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Icon
@@ -21,28 +22,43 @@ import com.diajarkoding.florafauna.ui.screen.HomeScreen
 import com.diajarkoding.florafauna.ui.screen.ProfileScreen
 import com.diajarkoding.florafauna.ui.screen.SearchScreen
 import androidx.compose.runtime.getValue
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.diajarkoding.florafauna.data.DummyData
+import com.diajarkoding.florafauna.ui.screen.DetailScreen
+import com.diajarkoding.florafauna.viewmodel.SpeciesViewModel
 
 @Composable
 fun MainScreen(
-    modifier: Modifier = Modifier,
-    navController: NavHostController = rememberNavController()
+    navController: NavHostController = rememberNavController(),
+    viewModel: SpeciesViewModel = viewModel()
 ) {
-    val speciesList = DummyData.speciesList // Data dummy diambil
+    val currentBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = currentBackStackEntry?.destination?.route
+
+    val showBottomBar = currentDestination in listOf(
+        BottomNavItem.Home.screenRoute,
+        BottomNavItem.Search.screenRoute,
+        BottomNavItem.Favorite.screenRoute,
+        BottomNavItem.Profile.screenRoute
+    )
 
     Scaffold(
-        bottomBar = { BottomBar(navController) }
+        bottomBar = {
+            AnimatedVisibility(visible = showBottomBar) {
+                BottomBar(navController)
+            }
+        }
     ) { innerPadding ->
         NavHost(
-            navController,
+            navController = navController,
             startDestination = BottomNavItem.Home.screenRoute,
-            modifier = modifier.padding(innerPadding)
+            modifier = Modifier.padding(innerPadding)
         ) {
             composable(BottomNavItem.Home.screenRoute) {
                 HomeScreen(
-                    speciesList = speciesList,
+                    speciesList = viewModel.speciesList,
                     onItemClick = { species ->
-                      
+                        navController.navigate("detail/${species.id}")
                     }
                 )
             }
@@ -55,9 +71,18 @@ fun MainScreen(
             composable(BottomNavItem.Profile.screenRoute) {
                 ProfileScreen()
             }
+            composable("detail/{speciesId}") {
+                val speciesId = it.arguments?.getString("speciesId") ?: ""
+                DetailScreen(
+                    speciesId = speciesId,
+                    viewModel = viewModel,
+                    onBackClick = { navController.popBackStack() }
+                )
+            }
         }
     }
 }
+
 
 
 @Composable
