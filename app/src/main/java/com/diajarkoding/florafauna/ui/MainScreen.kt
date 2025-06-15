@@ -21,26 +21,44 @@ import com.diajarkoding.florafauna.ui.screen.HomeScreen
 import com.diajarkoding.florafauna.ui.screen.ProfileScreen
 import com.diajarkoding.florafauna.ui.screen.SearchScreen
 import androidx.compose.runtime.getValue
+import com.diajarkoding.florafauna.data.DummyData
 
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
-    navController: NavHostController = rememberNavController()){
+    navController: NavHostController = rememberNavController()
+) {
+    val speciesList = DummyData.speciesList // Data dummy diambil
+
     Scaffold(
-        bottomBar = {BottomBar(navController)}
+        bottomBar = { BottomBar(navController) }
     ) { innerPadding ->
         NavHost(
             navController,
             startDestination = BottomNavItem.Home.screenRoute,
-            modifier.padding(innerPadding)
+            modifier = modifier.padding(innerPadding)
         ) {
-            composable(BottomNavItem.Home.screenRoute){ HomeScreen(navController) }
-            composable(BottomNavItem.Search.screenRoute) { SearchScreen(navController) }
-            composable(BottomNavItem.Favorite.screenRoute) { FavoriteScreen(navController) }
-            composable(BottomNavItem.Profile.screenRoute) { ProfileScreen() }
+            composable(BottomNavItem.Home.screenRoute) {
+                HomeScreen(
+                    speciesList = speciesList,
+                    onItemClick = { species ->
+                      
+                    }
+                )
+            }
+            composable(BottomNavItem.Search.screenRoute) {
+                SearchScreen(navController)
+            }
+            composable(BottomNavItem.Favorite.screenRoute) {
+                FavoriteScreen(navController)
+            }
+            composable(BottomNavItem.Profile.screenRoute) {
+                ProfileScreen()
+            }
         }
     }
 }
+
 
 @Composable
 fun BottomBar(

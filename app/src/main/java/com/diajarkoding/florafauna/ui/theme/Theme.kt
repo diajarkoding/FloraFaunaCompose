@@ -1,42 +1,39 @@
 package com.diajarkoding.florafauna.ui.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
-import androidx.compose.material3.lightColorScheme
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    primary = BlueSoft80,
+    onPrimary = DarkTextColor,
+    secondary = BlueGrey80,
+    onSecondary = DarkTextColor,
+    background = Color(0xFF121212),
+    surface = Color(0xFF1E1E1E),
+    onBackground = Color.White,
+    onSurface = Color.White,
+    error = ErrorRed
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
-
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+    primary = BlueSoft40,
+    onPrimary = LightTextColor,
+    secondary = BlueGrey40,
+    onSecondary = LightTextColor,
+    background = Color(0xFFF7FBFF),
+    surface = Color(0xFFEFF5FA),
+    onBackground = LightTextColor,
+    onSurface = LightTextColor,
+    error = ErrorRed
 )
 
 @Composable
 fun FloraFaunaTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
