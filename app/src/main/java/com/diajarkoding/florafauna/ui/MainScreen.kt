@@ -63,7 +63,12 @@ fun MainScreen(
                 )
             }
             composable(BottomNavItem.Search.screenRoute) {
-                SearchScreen(navController)
+                SearchScreen(
+                    viewModel = viewModel,
+                    onItemClick = { species ->
+                        navController.navigate("detail/${species.id}")
+                    }
+                )
             }
             composable(BottomNavItem.Favorite.screenRoute) {
                 FavoriteScreen(navController)

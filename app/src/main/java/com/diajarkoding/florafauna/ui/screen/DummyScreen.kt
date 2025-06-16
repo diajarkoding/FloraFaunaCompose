@@ -9,12 +9,12 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 
 
-@Composable
-fun SearchScreen(navController: NavController) {
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Text("Search Screen")
-    }
-}
+//@Composable
+//fun SearchScreen(navController: NavController) {
+//    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+//        Text("Search Screen")
+//    }
+//}
 
 @Composable
 fun FavoriteScreen(navController: NavController) {
