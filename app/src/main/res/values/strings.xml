@@ -8,4 +8,7 @@
     <string name="cari_flora_atau_fauna">Cari flora atau fauna...</string>
     <string name="bersihkan">Bersihkan</string>
     <string name="cari">Cari</string>
+    <string name="profile_picture">Profile Picture</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
 </resources>

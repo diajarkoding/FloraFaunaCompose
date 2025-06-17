@@ -1,4 +1,7 @@
 package com.diajarkoding.florafauna.ui.screen
+import android.view.LayoutInflater
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -12,40 +15,27 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
 import com.diajarkoding.florafauna.R
 
 @Composable
-fun ProfileScreen() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(24.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Image(
-            painter = painterResource(id = R.drawable.is_dicoding),
-            contentDescription = "Profile Picture",
-            modifier = Modifier
-                .size(120.dp)
-                .clip(CircleShape),
-            contentScale = ContentScale.Crop
-        )
+fun ProfileScreen(modifier: Modifier = Modifier) {
+    AndroidView(
+        factory = { context ->
+            val view = LayoutInflater.from(context).inflate(R.layout.profile_view, null)
 
-        Spacer(modifier = Modifier.height(24.dp))
+            val imageView = view.findViewById<ImageView>(R.id.profileImage)
+            imageView.setImageResource(R.drawable.is_dicoding)
 
-        Text(
-            text = "Iskandar Muhaemin",
-            style = MaterialTheme.typography.headlineSmall,
-            fontWeight = FontWeight.Bold
-        )
+            val nameTextView = view.findViewById<TextView>(R.id.nameText)
+            nameTextView.text = "Iskandar Muhaemin"
 
-        Spacer(modifier = Modifier.height(8.dp))
+            val emailTextView = view.findViewById<TextView>(R.id.emailText)
+            emailTextView.text = "diajarkoding@gmail.com"
 
-        Text(
-            text = "diajarkoding@gmail.com",
-            style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
-    }
+            view
+        },
+        modifier = modifier.fillMaxSize()
+    )
 }
+
