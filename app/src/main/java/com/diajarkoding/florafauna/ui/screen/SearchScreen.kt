@@ -25,7 +25,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.diajarkoding.florafauna.R
 import com.diajarkoding.florafauna.data.Species
 import com.diajarkoding.florafauna.ui.components.SpeciesList
 import com.diajarkoding.florafauna.viewmodel.SpeciesViewModel
@@ -43,15 +45,15 @@ fun SearchScreen(
         TextField(
             value = searchQuery,
             onValueChange = { viewModel.onSearchQueryChanged(it) },
-            placeholder = { Text("Cari flora atau fauna...") },
+            placeholder = { Text(stringResource(R.string.cari_flora_atau_fauna)) },
             modifier = Modifier.fillMaxWidth(),
             leadingIcon = {
-                Icon(Icons.Default.Search, contentDescription = "Cari")
+                Icon(Icons.Default.Search, contentDescription = stringResource(R.string.cari))
             },
             trailingIcon = {
                 if (searchQuery.isNotEmpty()) {
                     IconButton(onClick = { viewModel.onSearchQueryChanged("") }) {
-                        Icon(Icons.Default.Close, contentDescription = "Bersihkan")
+                        Icon(Icons.Default.Close, contentDescription = stringResource(R.string.bersihkan))
                     }
                 }
             },
@@ -67,8 +69,6 @@ fun SearchScreen(
             )
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
-
         if (!isSearchActive) {
             Box(
                 modifier = Modifier
@@ -77,7 +77,7 @@ fun SearchScreen(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "Belum ada hasil pencarian",
+                    text = stringResource(R.string.belum_ada_hasil_pencarian),
                     style = MaterialTheme.typography.bodyMedium
                 )
             }
@@ -89,11 +89,13 @@ fun SearchScreen(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "Tidak ditemukan hasil",
+                    text = stringResource(R.string.tidak_ditemukan_hasil),
                     style = MaterialTheme.typography.bodyMedium
                 )
             }
         } else {
+            Spacer(modifier = Modifier.height(16.dp))
+
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
@@ -102,7 +104,6 @@ fun SearchScreen(
                 }
             }
         }
-
 
     }
 }

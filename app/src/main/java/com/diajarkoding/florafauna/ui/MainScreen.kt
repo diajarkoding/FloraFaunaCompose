@@ -1,5 +1,6 @@
 package com.diajarkoding.florafauna.ui
 
+import SpeciesPreferences
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -26,12 +27,17 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.diajarkoding.florafauna.data.DummyData
 import com.diajarkoding.florafauna.ui.screen.DetailScreen
 import com.diajarkoding.florafauna.viewmodel.SpeciesViewModel
+import com.diajarkoding.florafauna.viewmodel.SpeciesViewModelFactory
 
 @Composable
 fun MainScreen(
     navController: NavHostController = rememberNavController(),
-    viewModel: SpeciesViewModel = viewModel()
+    speciesPreferences: SpeciesPreferences
 ) {
+    val viewModel: SpeciesViewModel = viewModel(
+        factory = SpeciesViewModelFactory(speciesPreferences)
+    )
+
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = currentBackStackEntry?.destination?.route
 
@@ -71,7 +77,10 @@ fun MainScreen(
                 )
             }
             composable(BottomNavItem.Favorite.screenRoute) {
-                FavoriteScreen(navController)
+                FavoriteScreen(
+                    viewModel = viewModel,
+                    onItemClick = { navController.navigate("detail/$it") }
+                )
             }
             composable(BottomNavItem.Profile.screenRoute) {
                 ProfileScreen()

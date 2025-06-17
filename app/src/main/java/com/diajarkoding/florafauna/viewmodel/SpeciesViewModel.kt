@@ -1,25 +1,39 @@
 package com.diajarkoding.florafauna.viewmodel
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.toMutableStateList
+import SpeciesPreferences
+import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.diajarkoding.florafauna.data.DummyData
 import com.diajarkoding.florafauna.data.Species
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
-class SpeciesViewModel : ViewModel(){
+class SpeciesViewModel(
+    private val speciesPreferences: SpeciesPreferences
+) : ViewModel() {
 
     private val _speciesList = DummyData.speciesList.toMutableStateList()
     val speciesList: List<Species> get() = _speciesList
 
     private val _searchQuery = mutableStateOf("")
-    val searchQuery: State<String> = _searchQuery
+    val searchQuery: State<String> get() = _searchQuery
 
-    private val _favorites = mutableStateListOf<Species>()
-    val favorites: List<Species> get() = _favorites
+    private var favoriteIds = mutableStateListOf<String>()
 
-    fun onSearchQueryChanged(query: String){
+    val favorites: List<Species>
+        get() = _speciesList.filter { favoriteIds.contains(it.id) }
+
+    init {
+        viewModelScope.launch {
+            speciesPreferences.favoriteIds.collectLatest { ids ->
+                favoriteIds.clear()
+                favoriteIds.addAll(ids)
+            }
+        }
+    }
+
+    fun onSearchQueryChanged(query: String) {
         _searchQuery.value = query
     }
 
@@ -35,19 +49,13 @@ class SpeciesViewModel : ViewModel(){
     val isSearchActive: Boolean
         get() = _searchQuery.value.isNotBlank()
 
-
     fun getSpeciesById(id: String): Species? = _speciesList.find { it.id == id }
 
-    fun isFavorite(id: String): Boolean = _favorites.any { it.id == id }
+    fun isFavorite(id: String): Boolean = favoriteIds.contains(id)
 
     fun toggleFavorite(id: String) {
-        val species = getSpeciesById(id)
-        species?.let {
-            if (isFavorite(id)) {
-                _favorites.removeAll { it.id == id }
-            } else {
-                _favorites.add(it)
-            }
+        viewModelScope.launch {
+            speciesPreferences.toggleFavorite(id)
         }
     }
 }

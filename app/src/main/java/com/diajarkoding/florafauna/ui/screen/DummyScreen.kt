@@ -16,12 +16,12 @@ import androidx.navigation.NavController
 //    }
 //}
 
-@Composable
-fun FavoriteScreen(navController: NavController) {
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Text("Favorite Screen")
-    }
-}
+//@Composable
+//fun FavoriteScreen(navController: NavController) {
+//    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+//        Text("Favorite Screen")
+//    }
+//}
 
 @Composable
 fun ProfileScreen() {

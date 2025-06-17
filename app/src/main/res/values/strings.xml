@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">FloraFauna</string>
     <string name="spesies_langka_dunia">Spesies Langka Dunia</string>
+    <string name="spesies_langka_favorit">Spesies Langka Favorit</string>
+    <string name="belum_ada_favorit">Belum Ada Favorit</string>
+    <string name="tidak_ditemukan_hasil">Tidak ditemukan hasil</string>
+    <string name="belum_ada_hasil_pencarian">Belum ada hasil pencarian</string>
+    <string name="cari_flora_atau_fauna">Cari flora atau fauna...</string>
+    <string name="bersihkan">Bersihkan</string>
+    <string name="cari">Cari</string>
 </resources>

@@ -61,7 +61,7 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.accompanist.pager)
     implementation(libs.accompanist.pager.indicators)
-    implementation(libs.androidx.foundation)
+    implementation ("androidx.datastore:datastore-preferences:1.1.7")
 
 
 }
