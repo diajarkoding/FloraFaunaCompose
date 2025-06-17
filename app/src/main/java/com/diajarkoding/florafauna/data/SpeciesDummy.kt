@@ -89,5 +89,5 @@ val floraDummy = listOf(
 )
 
 object DummyData {
-    val speciesList = faunaDummy + floraDummy
+    val speciesList: List<Species> = (faunaDummy + floraDummy).shuffled()
 }
